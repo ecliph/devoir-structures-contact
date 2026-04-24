@@ -15,11 +15,11 @@ Le sujet s'articule autour d'un répertoire de contacts (Sujet 9 : RepertoireCon
 ## 3. Structures comparées
 Pour stocker et manipuler ces contacts, deux structures de la bibliothèque standard Java ont été utilisées :
 - **`ArrayList<Contact>`** : un tableau redimensionnable qui stocke les objets de manière séquentielle.
-- **`HashMap<Integer, Contact>`** : une table de hachage associant une clé à une valeur. Ici, la clé utilisée est logiquement l'`id` du contact.
+- **`HashMap<Integer, Contact>`** : une table de hachage associant une clé à une valeur. Ici, la clé utilisée est l'`id` du contact.
 
 ## 4. Opérations étudiées
 Les fonctionnalités mesurées sont les suivantes :
-- L'ajout d'un contact (en vérifiant d'abord que son l'identifiant n'existe pas déjà).
+- L'ajout d'un contact (en vérifiant d'abord que son identifiant n'existe pas déjà).
 - La suppression d'un contact par son identifiant.
 - La recherche d'un contact par son identifiant.
 - Le listing complet (retourner tous les contacts).
@@ -28,15 +28,15 @@ Les fonctionnalités mesurées sont les suivantes :
 ## 5. Génération des données
 Afin d'obtenir des données variées pour les tests, un générateur crée automatiquement des profils de contacts.
 - Les catégories possibles (attribuées aléatoirement) sont : Famille, Amis, Travail, Universite, Autre.
-- Les identifiants générés sont uniques et incrémentaux, ainsi que les numéros de téléphone et emails, assurant la diversité du répertoire.
+- Les identifiants générés sont uniques et incrémentaux, assurant la validité des mesures, ainsi que des noms, numéros de téléphone et emails aléatoires.
 
 ## 6. Protocole expérimental
-Afin de limiter les variations imprévisibles de la machine :
+Afin d'encadrer l'expérimentation :
 - **Tailles testées :** 1000, 10000 et 50000 contacts.
 - **Répétitions :** Chaque mesure est exécutée 5 fois et la valeur affichée est une moyenne.
 - **Outils de mesure :** Le chronométrage repose sur `System.nanoTime()` converti par la suite en millisecondes. L'estimation de consommation mémoire exploite la classe standard `Runtime`.
-- **Scénarios mixtes :** De véritables scénarios mélangent en désordre tous les types d'opérations (via `Collections.shuffle`).
-- Chaque run du benchmark procède automatiquement à un export CSV dans le fichier `resultats.csv`.
+- **Scénarios mixtes :** Des scénarios mélangent en désordre tous les types d'opérations (via `Collections.shuffle`).
+- Chaque exécution du benchmark procède à un export CSV dans le fichier `resultats.csv`.
 
 ## 7. Résultats expérimentaux
 
@@ -85,47 +85,45 @@ Afin de limiter les variations imprévisibles de la machine :
 *\* Note : Les mesures à 0 octet pour certaines petites tailles d'ArrayList proviennent probablement des limites de précision avec `Runtime` et des opérations asynchrones de la JVM.*
 
 ## 8. Analyse des résultats
-D'après nos données empiriques :
-- **Recherche par identifiant :** La `HashMap` est beaucoup plus efficace. Elle conserve des temps quasi nuls avec une échelle grandissante. L'`ArrayList` flanche rapidement face à la volumétrie.
-- **Suppression par identifiant :** La `HashMap` est également ici considérablement plus efficace.
-- **Listing Complet :** C'est à ce moment précis que la tendance s'inverse : l'`ArrayList` est meilleure et beaucoup plus rapide que l'autre composant matériellement fragmenté.
-- **Ajout initial :** Grosse faiblesse dans notre implémentation : l'ajout dans la liste `ArrayList` est très coûteux. En effet, elle intègre une sécurité qui vérifie l'unicité de l'identifiant pour interdire les doublons, ce qui force une recherche linéaire systématique avant d'autoriser chaque ajout. 
-- **Consommation Mémoire :** Sans surprise, allouer une architecture par un tableau est hyper efficace. La mémoire prise par une `HashMap` est significativement plus lourde et consommatrice (presque dix fois plus sur les grands volumes observés).
+D'après nos données expérimentales :
+- **Recherche par identifiant :** La `HashMap` est nettement plus rapide. Elle conserve des temps très bas, alors que l'`ArrayList` voit ses temps d'exécution se dégrader fortement avec la volumétrie.
+- **Suppression par identifiant :** La `HashMap` est également ici nettement plus rapide pour cette opération.
+- **Listing Complet :** Dans ce cas, la tendance s'inverse : l'`ArrayList` est plus rapide grâce à sa structure linéaire simple.
+- **Ajout initial :** L'ajout dans l'`ArrayList` est très coûteux ici. L'implémentation vérifie l'unicité de l'identifiant avant d'ajouter chaque contact, ce qui impose une recherche linéaire répétée sur des structures de plus en plus grandes.
+- **Consommation Mémoire :** La structure tabulaire de l'`ArrayList` est peu coûteuse en RAM. En revanche, la `HashMap` consomme beaucoup plus de mémoire (près de 2,8 Mo contre environ 277 Ko pour la liste à 50000 éléments).
 
 ## 9. Lien avec les complexités théoriques
-Tout ceci respecte la théorie structurelle. Notamment de façon simplifiée :
+Nos mesures correspondent bien aux complexités algorithmiques théoriques :
 
 **ArrayList :**
-- Recherche : `O(n)`
-- Suppression par id : `O(n)` (nécessite le décalage potentiel des éléments)
-- Listing : `O(n)`
-- C'est de fait une disposition très simple.
+- Recherche : `O(n)` (recherche linéaire en parcourant le tableau).
+- Suppression par id : `O(n)` (demande parfois de décaler les éléments dans le tableau).
+- Listing : `O(n)` (parcours direct de l'ensemble de la liste, très léger en mémoire).
 
 **HashMap :**
-- Recherche : `O(1)` (en moyenne, l'index est identifié de façon statique)
-- Suppression : `O(1)` (en moyenne)
-- Listing : `O(n)` (implique un appel plus long pour restituer les valeurs cachées derrière des clés sur divers espaces hachés)
-- Mémoire : structure plus coûteuse (liée aux calculs d'empreinte et noeuds stockés).
+- Recherche et Suppression par id : `O(1)` en moyenne (accès direct calculé depuis le hash de la clé).
+- Listing : `O(n)` (implique de parcourir toute la table et ses buckets internes, ce qui prend un peu plus d'instructions qu'un tableau contigu).
+- Mémoire : Structure plus coûteuse (liée à la sauvegarde en objets `Map.Entry`, le maintien des pointeurs et des clés).
 
 ## 10. Limites de l'expérience
-L'évaluation se heurte néanmoins à des limites purement structurelles du langage ou de l'environnement :
-- Les mesures restent très dépendantes de la charge de la machine hôte.
-- Le chronométrage `System.nanoTime()` est suffisant pour le cadre d'un devoir étudiant tel que celui-ci, mais moins rigide et mathématique qu'un benchmark avancé spécialisé (JMH).
-- Une mesure précise et figée de la RAM est quasi utopique vue l'imprévisibilité de la JVM et de l'intermédiaire du garbage collector.
-- Le test ultime des 100000 contacts a été retiré de ce rapport : bien trop lourd (notamment à l'ajout) pour beaucoup d'équipements de nos laboratoires étudiants partagés.
-- Les chronos recensés ci-dessus peuvent donc légèrement varier même sur la même machine.
+Il est important de garder en tête certaines limites lors de l'analyse :
+- Les mesures sont dépendantes de la charge de la machine au moment du calcul.
+- Le chronométrage `System.nanoTime()` est parfaitement adapté pour ce devoir étudiant, mais reste moins exact qu'un outil de micro-benchmarking avancé tel que JMH.
+- L'estimation de la mémoire disponible est approximative à cause de la gestion automatique par la JVM et son ramasse-miettes (Garbage Collector).
+- La taille extrême de 100000 contacts n'est pas testée par défaut pour éviter un temps d'exécution trop long sur de petites machines de prêt.
+- Les résultats peuvent donc varier légèrement selon l'exécution et l'environnement matériel.
 
 ## 11. Conclusion
-Le choix final dépend uniquement du type d'usage. Nos tests révèlent d'une part qu'une **HashMap** est l'outil inévitable si les contacts doivent faire l'objet de très régulières fouilles ou modifications précises ciblant l'identifiant. Mais d'autre part, si c'est la dimension "Annuaire Global de Consultation" qui opère, où l'utilisateur ne fera que scroller, lister la totalité, sans chercher et surtout en faisant attention à l'intégrité de la RAM globale du système : dans ce cas l'**ArrayList** sera paradoxalement l'option la plus intelligente.
+HashMap est préférable lorsque les opérations principales sont la recherche ou la suppression par identifiant. ArrayList reste intéressante lorsque l'objectif principal est de parcourir l'ensemble des contacts avec une structure simple et peu coûteuse en mémoire.
 
 ## 12. Usage des LLM
-- Date de contribution : avril 2026.
-- Modèles exploités : ChatGPT et la console de développement assistée locale (Gemini/Antigravity).
-- Usages : aide conceptuelle, production d'exemples de bases, amélioration générale du process de benchmark, accompagnement aux analyses des temps, compilation mathématique du CSV final, aide à la syntaxe et formulation de la rédaction.
-- Validation : Le code Java final a été éprouvé, testé, débogué et optimisé de façon locale par le développeur originel et de multiples exécutions valides et répétitives se sont effectuées avant la rédaction.
+- Date : avril 2026.
+- LLM utilisés : ChatGPT et Gemini/Antigravity.
+- Usages : aide à la conception de l'architecture, élaboration du benchmark, ajout de la gestion CSV, compréhension des écarts de performance et aide à la rédaction de ce rapport.
+- Le code a été programmé, compilé et testé localement par l'étudiant.
 
 ## 13. Empreinte carbone de l'usage des LLM
-Déterminer un coût d'empreinte absolue pour de simples invites ne reste que pur fantasme aléatoire ; une estimation complète dépend intimement du modèle, de l'optimisation des centres serveurs, de l'activité ou de l'heure des calculs, et du calibrage général de l'infrastructure. Cependant, la prudence nous pousse à une mesure qualitative en avouant qu'un usage modéré via de nombreuses itérations de programmation à larges instructions (prompts) suscite un impact non nul de la part globale mais largement amoindri, cadré et proportionnel s'il vient servir d'outil universitaire final modéré à une seule machine.
+L'estimation précise de l'empreinte carbone est difficile, car elle dépend du modèle utilisé, du nombre de requêtes, de la taille des prompts et de l'infrastructure. Dans ce projet, l'usage des LLM a été régulier mais limité au cadre d'un devoir étudiant. L'impact existe donc, mais il reste difficile à quantifier précisément sans données techniques fournies par les services utilisés.
 
 ## 14. Annexes
 
@@ -133,7 +131,7 @@ Déterminer un coût d'empreinte absolue pour de simples invites ne reste que pu
 > "Je dois réaliser un devoir maison en Java pour un cours de Structures de données. Sujet 9 : RepertoireContacts. Opérations typiques : ajout, suppression, recherche par identifiant, listing complet [...]"
 
 ### Prompt #2
-> "Je veux que tu modifies/améliores le projet existant... Mesures Répétées et Moyennes (5 fois), Mesure de RAM via Runtime, Melange réel de Scénarios, et format de sortie purement CSV..."
+> "Tu as déjà généré une première version fonctionnelle... Maintenant, je veux que tu améliores le projet... Mesures Répétées et Moyennes (5 fois), Mesure mémoire approximative avec Runtime, Scénarios mixtes vraiment mélangés, Export CSV des résultats..."
 
 ### Prompt #3
-> "Le benchmark fonctionne mais il est trop long avec 100000 contacts. Ajoute un mode par défaut réduit et mets le plus gros chiffre en commentaire optionnel..."
+> "Le benchmark fonctionne mais il est trop long avec 100000 contacts. Ajoute un mode par défaut réduit et mets le plus gros chiffre en commentaire..."
