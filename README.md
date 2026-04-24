@@ -1,4 +1,4 @@
-# Devoir de Base de Données - Benchmark Répertoire Contacts
+# Devoir de Structures de données - Benchmark Répertoire Contacts
 
 Ce projet est la proposition algorithmique au Sujet 9 qui évalue et détermine l'efficacité de deux structures de données : `ArrayList` et `HashMap` pour modéliser analytiquement un répertoire de contacts selon la nature des opérations (lectures, écritures, manipulations mixtes).
 
@@ -24,6 +24,8 @@ java -cp src Main
 Le programme lancera des tests sur différentes échelles de volumétrie. Une conclusion finale apparaîtra dans la console. Les calculs intègrent 5 répétitions pour moyenner le résultat et éviter les incohérences algorithmiques.
 
 *Vous retrouverez l'ensemble du profil d'exécution dans le fichier the `resultats.csv` exporté dynamiquement à la racine qui peut être incorporé très facilement sur le rapport analytique.*
+
+Il faut attendre le message final COMPARAISON TERMINÉE avant d'utiliser le fichier resultats.csv.
 
 **Note sur l'empreinte mémoire :** 
 L'affichage sur l'empreinte mémoire d'une structure sous JAVA s'effectue sans aucune lib supplémentaire mais elle se base sur une estimation via le `Runtime`. La Machine Virtuelle (la JVM) libère sa mémoire avec un Garbage Collector de manière asynchrone, la conversion reste donc **totalement approximative**.

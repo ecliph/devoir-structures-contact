@@ -8,7 +8,8 @@ public class Main {
         System.out.println("Note : Chaque mesure est répétée 5 fois pour calculer la moyenne.");
 
         // Tailles de base définies dans le sujet
-        int[] volumesCibles = { 1000, 10000, 50000, 100000 };
+        // (100000 peut être rajouté ici si la machine est assez puissante pour le test)
+        int[] volumesCibles = { 1000, 10000, 50000 };
         
         try (FileWriter csvWriter = new FileWriter("resultats.csv", false)) {
             // Écriture de l'en-tête (une seule fois)
