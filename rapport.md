@@ -140,17 +140,23 @@ HashMap est préférable lorsque les opérations principales sont la recherche o
 
 L'estimation exacte de l'empreinte carbone d'un LLM est complexe. Elle dépend du modèle, du nombre de tokens traités, de l'infrastructure et de la source de l'électricité (mix énergétique) du centre de données. Des études récentes évaluent l'empreinte énergétique d'une requête générative classique entre **0,1 gCO2e** (requête texte courte sur des serveurs efficaces avec forte énergie renouvelable) et **2 à 5 gCO2e** (limite haute pour des modèles lourds ou requêtes complexes) [1][2].
 
-**Protocole d'estimation chiffrée :**
+### 13.1. Protocole d’estimation chiffrée
+
+Pour estimer l’empreinte carbone de l’usage des LLM, nous avons retenu les hypothèses suivantes :
+
 - Nombre de prompts structurants : 9.
 - Échanges secondaires : environ 10 à 15.
 - Total estimé : environ 20 à 25 requêtes LLM significatives.
-- Plusieurs de ces prompts étaient longs, notamment ceux générés et envoyés (code, rédaction complète).
+- Plusieurs prompts étaient longs, notamment ceux liés à la génération du code, à la rédaction du rapport et aux corrections successives.
+- L’estimation ne correspond pas à une mesure directe : elle donne seulement un ordre de grandeur.
 
-Pour ce projet, l’usage des LLM peut être estimé à environ 20 à 25 requêtes significatives, dont plusieurs prompts longs. En retenant une hypothèse basse de 0,1 gCO2e par requête et une hypothèse haute de 2 gCO2e par requête, on obtient une fourchette indicative d’environ 2 à 50 gCO2e. Cette estimation n’est pas une mesure directe : elle sert seulement à donner un ordre de grandeur.
+Pour ce projet, l’usage des LLM peut être estimé à environ 20 à 25 requêtes significatives, dont plusieurs prompts longs. En retenant une hypothèse basse de 0,1 gCO2e par requête et une hypothèse haute de 2 gCO2e par requête, on obtient une fourchette indicative d’environ 2 à 50 gCO2e.
 
 Cette valeur reste faible à l’échelle d’un projet universitaire, mais elle n’est pas nulle. Elle rappelle l’intérêt de limiter les requêtes inutiles et de préparer des prompts plus précis.
 
 *(Sources documentaires : [1] Estimates of LLM query CO2 impact based on independent data center assessments, smartly.ai ; [2] Synthèses sur la consommation des requêtes IA, Substack/Seedling.earth 2024)*
+
+Les sources utilisées donnent des ordres de grandeur indicatifs. Elles ne permettent pas de mesurer précisément l’empreinte réelle des requêtes effectuées dans ce projet.
 
 ## 14. Annexes
 
