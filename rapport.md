@@ -139,12 +139,14 @@ HashMap est préférable lorsque les opérations principales sont la recherche o
 ## 13. Empreinte carbone de l'usage des LLM
 
 L'estimation exacte de l'empreinte carbone est difficile, car :
+
 - les modèles utilisés ne donnent pas systématiquement la consommation exacte par requête ;
 - la consommation dépend du modèle spécifique, de la taille des prompts, de la longueur des réponses, du nombre de requêtes, de l'infrastructure serveur et du mix énergétique du lieu de traitement ;
 - les outils divers utilisés ici sont ChatGPT et Gemini/Antigravity.
 
 ### 13.1. Protocole retenu
 Nous estimons l'empreinte de manière qualitative en nous basant sur le volume d'échanges avec les IA :
+
 - **Nombre approximatif de prompts structurants :** 9 prompts majeurs (détaillés en annexe).
 - **Longueur des prompts :** Entre 100 et 400 mots en moyenne.
 - **Nombre d'allers-retours :** Moins de 20 itérations.
@@ -159,6 +161,7 @@ En l'absence de données techniques exactes fournies par les plateformes, on peu
 
 ### 13.4. Conclusion
 L'utilisation des LLM pour ce devoir a eu un impact environnemental non nul, mais cet impact reste encadré par le caractère ponctuel du projet. La réduction de l'empreinte dans de futurs travaux peut passer par :
+
 - la formulation de prompts plus précis ;
 - la limitation des itérations inutiles ;
 - la réutilisation locale des résultats générés ;
