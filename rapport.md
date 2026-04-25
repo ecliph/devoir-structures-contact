@@ -138,45 +138,21 @@ HashMap est préférable lorsque les opérations principales sont la recherche o
 
 ## 13. Empreinte carbone de l'usage des LLM
 
-L'estimation exacte de l'empreinte carbone est difficile, car :
+L'estimation exacte de l'empreinte carbone d'un LLM est complexe. Elle dépend du modèle, du nombre de tokens traités, de l'infrastructure et de la source de l'électricité (mix énergétique) du centre de données. Des études récentes évaluent l'empreinte énergétique d'une requête générative classique entre **0,1 gCO2e** (requête texte courte sur des serveurs efficaces avec forte énergie renouvelable) et **2 à 5 gCO2e** (limite haute pour des modèles lourds ou requêtes complexes) [1][2].
 
-- les modèles utilisés ne donnent pas systématiquement la consommation exacte par requête ;
-- la consommation dépend du modèle spécifique, de la taille des prompts, de la longueur des réponses, du nombre de requêtes, de l'infrastructure serveur et du mix énergétique du lieu de traitement ;
-- les outils divers utilisés ici sont ChatGPT et Gemini/Antigravity.
+**Protocole d'estimation chiffrée :**
+- Nombre de prompts structurants : 9.
+- Échanges secondaires : environ 10 à 15.
+- Total estimé : environ 20 à 25 requêtes LLM significatives.
+- Plusieurs de ces prompts étaient longs, notamment ceux générés et envoyés (code, rédaction complète).
 
-### 13.1. Protocole retenu
-Nous estimons l'empreinte de manière qualitative en nous basant sur le volume d'échanges avec les IA :
+Pour ce projet, l’usage des LLM peut être estimé à environ 20 à 25 requêtes significatives, dont plusieurs prompts longs. En retenant une hypothèse basse de 0,1 gCO2e par requête et une hypothèse haute de 2 gCO2e par requête, on obtient une fourchette indicative d’environ 2 à 50 gCO2e. Cette estimation n’est pas une mesure directe : elle sert seulement à donner un ordre de grandeur.
 
-- **Nombre approximatif de prompts structurants :** 9 prompts majeurs (détaillés en annexe).
-- **Longueur des prompts :** Entre 100 et 400 mots en moyenne.
-- **Nombre d'allers-retours :** Moins de 20 itérations.
-- **Type d'usage :** Génération initiale de code, correction de code, génération de ce rapport, correction du style, génération de guide vidéo.
-- Il n'y a pas eu de mesure directe fournie par les plateformes. L'évaluation intègre les échanges pour comprendre le sujet jusqu'à la préparation de la vidéo finale.
+Cette valeur reste faible à l’échelle d’un projet universitaire, mais elle n’est pas nulle. Elle rappelle l’intérêt de limiter les requêtes inutiles et de préparer des prompts plus précis.
 
-### 13.2. Estimation qualitative
-L'usage peut être considéré comme modéré à soutenu pour un devoir étudiant (plus élevé qu'une question ponctuelle), mais il reste strictement limité dans le temps à un projet universitaire court.
-
-### 13.3. Estimation chiffrée prudente
-En l'absence de données techniques exactes fournies par les plateformes, on peut seulement proposer un ordre de grandeur. En supposant plusieurs dizaines de requêtes textuelles, dont plusieurs prompts longs, l'empreinte carbone totale de l'usage des LLM pour ce projet peut être estimée qualitativement dans un ordre de grandeur faible à modéré, probablement de quelques grammes à quelques dizaines de grammes de CO2e. Cette estimation reste indicative et dépend fortement des modèles réellement utilisés et de l'infrastructure. *(Sources à compléter si une estimation chiffrée plus précise est exigée)*.
-
-### 13.4. Conclusion
-L'utilisation des LLM pour ce devoir a eu un impact environnemental non nul, mais cet impact reste encadré par le caractère ponctuel du projet. La réduction de l'empreinte dans de futurs travaux peut passer par :
-
-- la formulation de prompts plus précis ;
-- la limitation des itérations inutiles ;
-- la réutilisation locale des résultats générés ;
-- la vérification et le débogage manuel du code au lieu de solliciter systématiquement le LLM en boucle.
+*(Sources documentaires : [1] Estimates of LLM query CO2 impact based on independent data center assessments, smartly.ai ; [2] Synthèses sur la consommation des requêtes IA, Substack/Seedling.earth 2024)*
 
 ## 14. Annexes
 
-Les prompts principaux utilisés avec les LLM sont fournis dans le fichier `prompts_llm.md`. Ils couvrent les étapes suivantes : génération initiale du code, amélioration du benchmark, mesure mémoire, export CSV, rédaction du rapport, correction du style, génération du PDF et préparation de la vidéo.
-
-- **Prompt 1 :** génération initiale du code Java
-- **Prompt 2 :** amélioration benchmark/mémoire/CSV
-- **Prompt 3 :** mise à jour GitHub
-- **Prompt 4 :** réduction du benchmark
-- **Prompt 5 :** rédaction du rapport
-- **Prompt 6 :** correction du style
-- **Prompt 7 :** génération PDF et guide vidéo
-- **Prompt 8 :** correction mise en page PDF
-- **Prompt 9 :** amélioration empreinte carbone et traçabilité
+Les prompts complets sont fournis dans le fichier `prompts_llm.md`.
+Ce fichier doit être rendu avec le rapport, car il contient l'ensemble des prompts structurants du projet.
