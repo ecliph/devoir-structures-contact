@@ -137,15 +137,43 @@ HashMap est préférable lorsque les opérations principales sont la recherche o
 - Le code a été programmé, compilé et testé localement par l'étudiant.
 
 ## 13. Empreinte carbone de l'usage des LLM
-L'estimation précise de l'empreinte carbone est difficile, car elle dépend du modèle utilisé, du nombre de requêtes, de la taille des prompts et de l'infrastructure. Dans ce projet, l'usage des LLM a été régulier mais limité au cadre d'un devoir étudiant. L'impact existe donc, mais il reste difficile à quantifier précisément sans données techniques fournies par les services utilisés.
+
+L'estimation exacte de l'empreinte carbone est difficile, car :
+- les modèles utilisés ne donnent pas systématiquement la consommation exacte par requête ;
+- la consommation dépend du modèle spécifique, de la taille des prompts, de la longueur des réponses, du nombre de requêtes, de l'infrastructure serveur et du mix énergétique du lieu de traitement ;
+- les outils divers utilisés ici sont ChatGPT et Gemini/Antigravity.
+
+### 13.1. Protocole retenu
+Nous estimons l'empreinte de manière qualitative en nous basant sur le volume d'échanges avec les IA :
+- **Nombre approximatif de prompts structurants :** 9 prompts majeurs (détaillés en annexe).
+- **Longueur des prompts :** Entre 100 et 400 mots en moyenne.
+- **Nombre d'allers-retours :** Moins de 20 itérations.
+- **Type d'usage :** Génération initiale de code, correction de code, génération de ce rapport, correction du style, génération de guide vidéo.
+- Il n'y a pas eu de mesure directe fournie par les plateformes. L'évaluation intègre les échanges pour comprendre le sujet jusqu'à la préparation de la vidéo finale.
+
+### 13.2. Estimation qualitative
+L'usage peut être considéré comme modéré à soutenu pour un devoir étudiant (plus élevé qu'une question ponctuelle), mais il reste strictement limité dans le temps à un projet universitaire court.
+
+### 13.3. Estimation chiffrée prudente
+En l'absence de données techniques exactes fournies par les plateformes, on peut seulement proposer un ordre de grandeur. En supposant plusieurs dizaines de requêtes textuelles, dont plusieurs prompts longs, l'empreinte carbone totale de l'usage des LLM pour ce projet peut être estimée qualitativement dans un ordre de grandeur faible à modéré, probablement de quelques grammes à quelques dizaines de grammes de CO2e. Cette estimation reste indicative et dépend fortement des modèles réellement utilisés et de l'infrastructure. *(Sources à compléter si une estimation chiffrée plus précise est exigée)*.
+
+### 13.4. Conclusion
+L'utilisation des LLM pour ce devoir a eu un impact environnemental non nul, mais cet impact reste encadré par le caractère ponctuel du projet. La réduction de l'empreinte dans de futurs travaux peut passer par :
+- la formulation de prompts plus précis ;
+- la limitation des itérations inutiles ;
+- la réutilisation locale des résultats générés ;
+- la vérification et le débogage manuel du code au lieu de solliciter systématiquement le LLM en boucle.
 
 ## 14. Annexes
 
-### Prompt #1
-> "Je dois réaliser un devoir maison en Java pour un cours de Structures de données. Sujet 9 : RepertoireContacts. Opérations typiques : ajout, suppression, recherche par identifiant, listing complet [...]"
+Les prompts principaux utilisés avec les LLM sont fournis dans le fichier `prompts_llm.md`. Ils couvrent les étapes suivantes : génération initiale du code, amélioration du benchmark, mesure mémoire, export CSV, rédaction du rapport, correction du style, génération du PDF et préparation de la vidéo.
 
-### Prompt #2
-> "Tu as déjà généré une première version fonctionnelle... Maintenant, je veux que tu améliores le projet... Mesures Répétées et Moyennes (5 fois), Mesure mémoire approximative avec Runtime, Scénarios mixtes vraiment mélangés, Export CSV des résultats..."
-
-### Prompt #3
-> "Le benchmark fonctionne mais il est trop long avec 100000 contacts. Ajoute un mode par défaut réduit et mets le plus gros chiffre en commentaire..."
+- **Prompt 1 :** génération initiale du code Java
+- **Prompt 2 :** amélioration benchmark/mémoire/CSV
+- **Prompt 3 :** mise à jour GitHub
+- **Prompt 4 :** réduction du benchmark
+- **Prompt 5 :** rédaction du rapport
+- **Prompt 6 :** correction du style
+- **Prompt 7 :** génération PDF et guide vidéo
+- **Prompt 8 :** correction mise en page PDF
+- **Prompt 9 :** amélioration empreinte carbone et traçabilité
