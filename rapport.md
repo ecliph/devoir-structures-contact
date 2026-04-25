@@ -41,6 +41,16 @@ Afin d'encadrer l'expérimentation :
 - **Répétitions :** Chaque mesure est exécutée 5 fois et la valeur affichée est une moyenne.
 - **Outils de mesure :** Le chronométrage repose sur `System.nanoTime()` converti par la suite en millisecondes. L'estimation de consommation mémoire exploite la classe standard `Runtime`.
 - **Scénarios mixtes :** Des scénarios mélangent en désordre tous les types d'opérations (via `Collections.shuffle`).
+
+Les scénarios mixtes utilisés sont les suivants :
+
+| Scénario | Ajout | Suppression | Recherche | Listing | Comptage |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Recherche intensive | 10% | 5% | 70% | 10% | 5% |
+| Listing intensif | 10% | 5% | 10% | 65% | 10% |
+| Scénario équilibré | 25% | 20% | 35% | 10% | 10% |
+
+Dans chaque scénario, la somme des pourcentages est égale à 100%, conformément au protocole demandé.
 - Chaque exécution du benchmark procède à un export CSV dans le fichier `resultats.csv`.
 
 ## 7. Résultats expérimentaux
